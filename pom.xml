@@ -46,7 +46,6 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.9</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -62,6 +61,12 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <!-- Plugin SonarQube -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.1.2184</version> <!-- Utilisez la dernière version disponible -->
             </plugin>
         </plugins>
     </build>
