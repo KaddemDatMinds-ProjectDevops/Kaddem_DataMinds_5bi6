@@ -13,7 +13,7 @@ services:
   gestion-station-ski-backend:
     image: mokhtardocker11/kaddem-backend:latest  # Utiliser l'image correcte ici
     ports:
-      - "8089:8089"
+      - "3307:3306"
     depends_on:
       - mysql
     environment:
