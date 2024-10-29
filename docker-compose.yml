@@ -8,12 +8,11 @@ services:
       MYSQL_USER: mokhtar
       MYSQL_PASSWORD: Ayouda123
     ports:
-      - "3306:3306"
-
+      - "3307:3306"  # Exposer MySQL sur le port 3307 de l'hôte
   gestion-station-ski-backend:
-    image: mokhtardocker11/kaddem-backend:latest  # Utiliser l'image correcte ici
+    image: mokhtardocker11/kaddem-backend:latest
     ports:
-      - "3307:3306"
+      - "8089:8089"
     depends_on:
       - mysql
     environment:
