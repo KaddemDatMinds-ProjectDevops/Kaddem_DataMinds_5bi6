@@ -46,7 +46,6 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.9</version>
         </dependency>
-
     </dependencies>
     <build>
         <finalName>kaddem</finalName>
@@ -99,11 +98,11 @@
             </plugin>
         </plugins>
     </build>
-    <distributionManagement>
-    <repository>
-        <id>deploymentRepo</id>
-        <url>http://192.168.56.101:8081/repository/kaddem/</url>
-    </repository>
-</distributionManagement>
 
+    <distributionManagement>
+        <repository>
+            <id>nexus</id> <!-- Ensure this matches the ID in your Jenkins pipeline -->
+            <url>http://192.168.56.101:8081/repository/maven-releases/</url> <!-- Nexus default repository URL -->
+        </repository>
+    </distributionManagement>
 </project>
