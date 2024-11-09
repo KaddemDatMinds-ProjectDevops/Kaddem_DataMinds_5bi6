@@ -15,7 +15,7 @@ services:
   app-kaddem:
     depends_on:
       - mysqldb
-    image:  islembenbelgacem/islembenbelgacem-5bi6-kaddemproject-backend:latest
+    image:  islembenbelgacem/islembenbelgacem-5bi6-kaddemproject-backend
     restart: on-failure
     ports:
       - "8089:8089"
