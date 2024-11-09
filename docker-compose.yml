@@ -27,14 +27,6 @@ services:
               "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL8Dialect",
               "spring.jpa.hibernate.ddl-auto": "update"
             }'
-    stdin_open: true
-    tty: true
-  fangular-app:
-    image: islembenbelgacem/islembenbelgacem-5bi6-kaddemproject-backend:latest
-    ports:
-      - "80:80"  # Map port 80 in the container to 4200 on localhost
-    restart: always
-    depends_on:
-      - app-kaddem
+   
 volumes:
   db:
