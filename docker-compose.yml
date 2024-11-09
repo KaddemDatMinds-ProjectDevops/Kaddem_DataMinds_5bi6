@@ -15,7 +15,7 @@ services:
   app-kaddem:
     depends_on:
       - mysqldb
-    image:  islembenbelgacem/islembenbelgacem-5bi6-kaddemproject-backend
+    image:  islembenbelgacem/islembenbelgacem-5bi6-kaddemproject-backend:latest
     restart: on-failure
     ports:
       - "8089:8089"
@@ -27,6 +27,6 @@ services:
               "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL8Dialect",
               "spring.jpa.hibernate.ddl-auto": "update"
             }'
-   
+
 volumes:
   db:
