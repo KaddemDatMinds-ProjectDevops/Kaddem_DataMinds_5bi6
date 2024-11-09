@@ -1,66 +1,77 @@
-#version: "3"
-#services:
-#  mysqldb:
-#    container_name: mysqldb
-#    image: mysql:8.0
-#    ports:
-#      - 3307:3306
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=admin
-#      - MYSQL_DATABASE=khaddemApp
-#      - MYSQL_USER=root
-#      - MYSQL_PASSWORD=admin
-#    networks:
-#      - my-network
-#
-#  spring_app:
-#    image: mahdifersi/mahdifersi-5se3-g2-khaddem
-#    container_name: khaddemProject
-#    ports:
-#      - 8070:8070
-#    depends_on:
-#      - mysqldb
-#    networks:
-#      - my-network
-#networks:
-#  my-network:
-version: "2"
+version: '3.8'
+
 services:
-<<<<<<< main
-  spring_app:
-    depends_on:
-      - db
-    image: mahdifersi/mahdifersi-5se3-g2-khaddem
-=======
-  mysqldb:
-    container_name: mysqldb
-    image: mysql/mysql-server:8.0
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: devops
+    volumes:
+      - mysql_data:/var/lib/mysql
     ports:
-      - 3306:3306
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes
-      MYSQL_DATABASE: khaddemProject
+      - "3306:3306"
 
-    networks:
-      - my-network
-
-  spring_app:
-    image: nourajimi/nourajimi_5se3-g2-khaddem
-    container_name: khaddemProject
+  springboot:
+    image: ahmed144/ahmedamri-5erpbi6:latest  # Use the Docker Hub image
     environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3306/khaddemApp?useUnicode=true&createDatabaseIfNotExist=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-      - spring.datasource.username=root
-      - spring.datasource.password=
-      - spring.jpa.hibernate.ddl-auto=update
->>>>>>> NourAjimi-5SE3-G2
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/devops?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
     ports:
       - "8070:8070"
+    depends_on:
+      - mysql
 
-  db:
-    image: mysql:8.0
-    container_name: mysql-db
-    environment:
-      MYSQL_DATABASE: khaddemApp
-      MYSQL_ROOT_PASSWORD: admin
+  sonarqube:
+    image: sonarqube:latest
     ports:
-      - "3307:3306"
+      - "9000:9000"
+    restart: always
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_temp:/opt/sonarqube/temp
+
+  nexus:
+    image: sonatype/nexus3
+    ports:
+      - "8081:8081"
+    volumes:
+      - nexus_data:/nexus-data
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Ensure prometheus.yml is in the same directory
+    ports:
+      - "9090:9090"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    depends_on:
+      - springboot
+      - mysql
+      - sonarqube
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+    depends_on:
+      - springboot
+
+volumes:
+  mysql_data:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_temp:
+  nexus_data:
+  grafana_data:
