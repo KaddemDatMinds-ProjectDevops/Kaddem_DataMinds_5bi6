@@ -13,7 +13,7 @@ import java.util.Set;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/universite")
-/*@CrossOrigin(origins = "*", allowedHeaders = "*")*/
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UniversiteRestController {
 	@Autowired
 	IUniversiteService universiteService;
