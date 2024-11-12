@@ -12,8 +12,8 @@ services:
   mysqldb:
     image: mysql:8
     environment:
-      MYSQL_ROOT_PASSWORD: my-secret-pw
-      MYSQL_DATABASE: db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kaddem
     ports:
       - "3306:3306"
     networks:
