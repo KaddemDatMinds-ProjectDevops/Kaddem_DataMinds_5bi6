@@ -125,5 +125,5 @@ public class UniversiteServiceImplTest {
         verify(universiteRepository, times(1)).save(universite);
     }
 
-    
+
 }
