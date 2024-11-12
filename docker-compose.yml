@@ -2,23 +2,56 @@ version: '3'
 services:
   kaddem:
     image: slimdrira/kaddem-backend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8089:8089"
     networks:
       - app-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/kaddem?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: SlimSQL123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL5InnoDBDialect
     depends_on:
       - mysqldb
 
   mysqldb:
-    image: mysql:8
+    image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: kaddem
     ports:
       - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+    networks:
+      - app-network
+
+  mysqld-exporter:
+    image: prom/mysqld-exporter
+    depends_on:
+      - mysqldb
+    command:
+      - --config.my-cnf=/cfg/my.cnf
+      - --mysqld.address=mysqldb:3306
+    volumes:
+      - "./.my.cnf:/cfg/my.cnf"
+    ports:
+      - "9104:9104"
     networks:
       - app-network
 
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  mysql_data:
