@@ -79,7 +79,7 @@ public class Contrat implements Serializable {
         this.etudiant = etudiant;
     }
 
-    public Contrat() {
+    public Contrat(boolean b, Date date) {
     }
 
     @Override

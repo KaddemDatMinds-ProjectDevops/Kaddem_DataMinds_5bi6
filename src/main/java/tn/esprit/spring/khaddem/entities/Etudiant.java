@@ -38,7 +38,7 @@ public class Etudiant  implements Serializable {
     public Etudiant() {
     }
 
-    public Etudiant(Integer idEtudiant, String prenomE, String nomE, Option op, Departement departement, List<Equipe> equipes, List<Contrat> contrats) {
+    public Etudiant(Integer idEtudiant, String prenomE, String nomE, Option op, tn.esprit.spring.khaddem.entities.Departement departement, List<Equipe> equipes, List<Contrat> contrats) {
         this.idEtudiant = idEtudiant;
         this.prenomE = prenomE;
         this.nomE = nomE;
@@ -80,11 +80,11 @@ public class Etudiant  implements Serializable {
         this.op = op;
     }
 
-    public Departement getDepartement() {
+    public tn.esprit.spring.khaddem.entities.Departement getDepartement() {
         return departement;
     }
 
-    public void setDepartement(Departement departement) {
+    public void setDepartement(tn.esprit.spring.khaddem.entities.Departement departement) {
         this.departement = departement;
     }
 
@@ -106,7 +106,7 @@ public class Etudiant  implements Serializable {
 
             @ManyToOne
             @JsonIgnore
-            private Departement departement;
+            private tn.esprit.spring.khaddem.entities.Departement departement;
     @ManyToMany
     @JsonIgnore
     private List<Equipe> equipes;
