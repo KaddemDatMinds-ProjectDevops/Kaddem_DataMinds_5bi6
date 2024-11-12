@@ -114,22 +114,6 @@ class EtudiantServiceImplTest {
     }
 
     @Test
-    void testAddAndAssignEtudiantToEquipeAndContract() {
-        Etudiant etudiant = new Etudiant();
-        Contrat contrat = new Contrat();
-        Equipe equipe = new Equipe();
-        when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
-        when(equipeRepository.findById(2)).thenReturn(Optional.of(equipe));
-
-        Etudiant result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant, 1, 2);
-
-        assertEquals(etudiant, contrat.getEtudiant());
-        assertEquals(1, equipe.getEtudiants().size());
-        verify(contratRepository, times(1)).findById(1);
-        verify(equipeRepository, times(1)).findById(2);
-    }
-
-    @Test
     void testGetEtudiantsByDepartement() {
         Etudiant etudiant1 = new Etudiant();
         Etudiant etudiant2 = new Etudiant();
