@@ -121,7 +121,7 @@ class EtudiantServiceImplTest {
         when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
         when(equipeRepository.findById(2)).thenReturn(Optional.of(equipe));
 
-        etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant, 1, 2);
+        Etudiant result = etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant, 1, 2);
 
         assertEquals(etudiant, contrat.getEtudiant());
         assertEquals(1, equipe.getEtudiants().size());
