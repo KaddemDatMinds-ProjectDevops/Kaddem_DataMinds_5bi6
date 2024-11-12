@@ -13,7 +13,7 @@ scrape_configs:
   - job_name: 'springboot-app'
     metrics_path: '/kaddem/actuator/prometheus'  # Path to the Prometheus metrics endpoint
     static_configs:
-      - targets: ['192.168.56.10:8070']
+      - targets: ['springboot:8070']
 
   - job_name: 'vagrant'
     static_configs:
