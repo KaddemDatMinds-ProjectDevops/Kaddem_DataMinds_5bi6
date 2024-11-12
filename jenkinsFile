@@ -45,11 +45,11 @@ pipeline {
         stage ('Docker') {
             steps {
                 echo 'Building Docker image for the application...'
-                sh 'docker build -t inesbenazouz/devops:1.0.0 .'
+                sh 'docker build -t inesbenazouz/kaddem:1.0.0 .'
                 echo 'Logging into Docker Hub...'
                 sh 'docker login -u inesbenazouz --password 000000000'
                 echo 'Pushing Docker image to the repository...'
-                sh 'docker push inesbenazouz/devops:1.0.0'
+                sh 'docker push inesbenazouz/kaddem:1.0.0'
             }
         }
         stage ('Docker compose') {
