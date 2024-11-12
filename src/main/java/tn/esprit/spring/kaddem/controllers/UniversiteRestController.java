@@ -1,8 +1,9 @@
 package tn.esprit.spring.kaddem.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.spring.kaddem.dtos.UniversiteDto;
 import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.entities.Universite;
 import tn.esprit.spring.kaddem.services.IUniversiteService;
@@ -14,13 +15,12 @@ import java.util.Set;
 @AllArgsConstructor
 @RequestMapping("/universite")
 public class UniversiteRestController {
-	@Autowired
 	IUniversiteService universiteService;
+	private final ModelMapper modelMapper;
 	// http://localhost:8089/Kaddem/universite/retrieve-all-universites
 	@GetMapping("/retrieve-all-universites")
 	public List<Universite> getUniversites() {
-		List<Universite> listUniversites = universiteService.retrieveAllUniversites();
-		return listUniversites;
+		return universiteService.retrieveAllUniversites();
 	}
 	// http://localhost:8089/Kaddem/universite/retrieve-universite/8
 	@GetMapping("/retrieve-universite/{universite-id}")
@@ -30,9 +30,9 @@ public class UniversiteRestController {
 
 	// http://localhost:8089/Kaddem/universite/add-universite
 	@PostMapping("/add-universite")
-	public Universite addUniversite(@RequestBody Universite u) {
-		Universite universite = universiteService.addUniversite(u);
-		return universite;
+	public Universite addUniversite(@RequestBody UniversiteDto u) {
+		Universite universite = this.modelMapper.map(u, Universite.class);
+		return universiteService.addUniversite(universite);
 	}
 
 	// http://localhost:8089/Kaddem/universite/remove-universite/1
@@ -43,9 +43,9 @@ public class UniversiteRestController {
 
 	// http://localhost:8089/Kaddem/universite/update-universite
 	@PutMapping("/update-universite")
-	public Universite updateUniversite(@RequestBody Universite u) {
-		Universite u1= universiteService.updateUniversite(u);
-		return u1;
+	public Universite updateUniversite(@RequestBody UniversiteDto u) {
+		Universite universite = this.modelMapper.map(u, Universite.class);
+		return universiteService.updateUniversite(universite);
 	}
 
 	//@PutMapping("/affecter-etudiant-departement")

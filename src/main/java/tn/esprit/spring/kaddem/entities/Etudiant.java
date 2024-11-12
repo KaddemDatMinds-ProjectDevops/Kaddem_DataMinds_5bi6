@@ -2,6 +2,7 @@ package tn.esprit.spring.kaddem.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 
 @SuppressWarnings("SpellCheckingInspection")
 @Entity
+@NoArgsConstructor
 public class Etudiant implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -22,7 +24,7 @@ public class Etudiant implements Serializable{
     private Option op;
     @OneToMany(mappedBy="etudiant", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Contrat> Contrats;
+    private Set<Contrat> contrats;
     @ManyToOne
     @JsonIgnore
     private Departement departement;
@@ -30,11 +32,7 @@ public class Etudiant implements Serializable{
     @ManyToMany(mappedBy="etudiants")
 
     @JsonIgnore
-  //  private Set<Equipe> equipes ;
     private List<Equipe> equipes ;
-    public Etudiant() {
-        // TODO Auto-generated constructor stub
-    }
 
     public Etudiant(String nomE, String prenomE) {
         this.nomE = nomE;
@@ -57,11 +55,11 @@ public class Etudiant implements Serializable{
     }
 
     public Set<Contrat> getContrats() {
-        return Contrats;
+        return contrats;
     }
 
     public void setContrats(Set<Contrat> contrats) {
-        Contrats = contrats;
+        this.contrats = contrats;
     }
 
     public Departement getDepartement() {

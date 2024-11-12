@@ -1,6 +1,7 @@
 package tn.esprit.spring.kaddem.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -8,6 +9,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 public class Equipe implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -22,10 +24,6 @@ public class Equipe implements Serializable{
     private Set<Etudiant> etudiants;
     @OneToOne
     private DetailEquipe detailEquipe;
-
-    public Equipe() {
-        // TODO Auto-generated constructor stub
-    }
 
     public Equipe(String nomEquipe) {
         this.nomEquipe = nomEquipe;
