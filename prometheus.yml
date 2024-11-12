@@ -11,7 +11,7 @@ scrape_configs:
     static_configs:
       - targets: ['192.168.56.10:8080']  # Replace with your Jenkins IP and port
   - job_name: 'springboot-app'
-    metrics_path: '/kaddem/actuator/prometheus' # Path to the Prometheus metrics endpoint
+    metrics_path: '/kaddem/kaddem/actuator/prometheus' # Path to the Prometheus metrics endpoint
     static_configs:
       - targets: ['192.168.56.10:8070']
 
