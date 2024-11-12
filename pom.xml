@@ -101,7 +101,7 @@
 
     <distributionManagement>
         <repository>
-            <id>deploymentRepo</id>
+            <id>deployRepo</id>
             <name>Nexus Repository</name>
             <url>http://192.168.56.101:8081/repository/kaddem/</url> 
         </repository>
