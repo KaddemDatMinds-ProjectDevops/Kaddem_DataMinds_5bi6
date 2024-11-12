@@ -1,0 +1,74 @@
+pipeline {
+    agent any
+
+    tools {
+        maven "M2_HOME"
+    }
+
+    stages {
+        stage ('Git') {
+            steps {
+                echo 'Cloning the Git repository from the specified branch and credentials...'
+                git branch: 'Student-Management', credentialsId: 'Git-Creds', url: 'https://github.com/KaddemDatMinds-ProjectDevops/Kaddem_DataMinds_5bi6.git'
+            }
+        }
+        stage ('Building') {
+            steps {
+                echo 'Running Maven clean and compile to build the project...'
+                sh 'mvn clean compile'
+            }
+        }
+        stage ('Tests Mockito') {
+            steps {
+                echo 'Executing unit tests using Mockito...'
+                sh 'mvn test'
+            }
+        }
+        stage ('SonarQube Test Code') {
+            steps {
+                echo 'Performing SonarQube analysis for code quality and security checks...'
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.50.4:9000/ -Dsonar.token=squ_7be36b8f6953d2a883ca81efe9a4ce51da455549'
+            }
+        }
+        stage ('Package') {
+            steps {
+                echo 'Packaging the application with Maven, skipping tests...'
+                sh 'mvn package -DskipTests'
+            }
+        }
+        stage ('Nexus') {
+            steps {
+                echo 'Deploying the packaged application to Nexus repository...'
+                sh 'mvn -U --batch-mode deploy -DskipTests'
+            }
+        }
+        stage ('Docker') {
+            steps {
+                echo 'Building Docker image for the application...'
+                sh 'docker build -t inesbenazouz/devops:1.0.0 .'
+                echo 'Logging into Docker Hub...'
+                sh 'docker login -u inesbenazouz --password 000000000'
+                echo 'Pushing Docker image to the repository...'
+                sh 'docker push inesbenazouz/devops:1.0.0'
+            }
+        }
+        stage ('Docker compose') {
+            steps {
+                echo 'Starting Docker services with Docker Compose...'
+                sh 'docker compose up -d'
+            }
+        }
+        stage ('Prometheus') {
+            steps {
+                echo 'Starting Prometheus monitoring service...'
+                sh 'docker start prometheus'
+            }
+        }
+        stage ('Grafana') {
+            steps {
+                echo 'Starting Grafana for data visualization...'
+                sh 'docker start grafana'
+            }
+        }
+    }
+}
