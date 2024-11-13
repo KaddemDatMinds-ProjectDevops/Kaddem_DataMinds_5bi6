@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @ToString
 @NoArgsConstructor
-//this is contract class
+    
 public class Contrat implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
