@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @ToString
 @NoArgsConstructor
+    //contract
     
 public class Contrat implements Serializable{
     @Id
